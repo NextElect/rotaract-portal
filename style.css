@@ -333,6 +333,45 @@ footer { text-align: center; padding: 2rem; margin-top: 4rem; color: #777; font-
 
 
 /* =========================================
+   地区組織図（画像直接添付）用のスタイル
+   ========================================= */
+/* エリア全体の余白 */
+.organization-chart-section { margin-bottom: 3.5rem; }
+
+/* 画像を囲む額縁（カード状のコンテナ） */
+.attached-image-wrapper {
+    margin-top: 1.5rem;
+    text-align: center;
+    border: 2px solid #e8dcc4;    
+    padding: 0.8rem;              
+    background-color: #ffffff;     
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(139, 90, 43, 0.05); 
+    overflow: hidden;
+}
+
+/* 添付画像自体の設定 */
+.attached-image { max-width: 100%; height: auto; border-radius: 6px; display: block; margin: 0 auto; transition: transform 0.2s ease, opacity 0.2s ease; }
+
+/* 画像にカーソルを乗せたとき（タップしたとき）の動き */
+.attached-image:hover { opacity: 0.9; transform: scale(1.01); cursor: pointer; }
+
+/* 画像の下に表示する注意書き */
+.image-caption { font-size: 0.85rem; color: #7f8c8d; text-align: right; margin-top: 0.6rem; padding-right: 0.5rem; }
+
+/* スマホ閲覧時（画面幅が600px以下）の微調整 */
+@media (max-width: 600px) {
+    .attached-image-wrapper {
+        padding: 0.5rem;           /* スマホでは余白を少し狭くして画像を大きく見せる */
+        border-radius: 8px;
+    }
+    .image-caption {
+        text-align: center;        /* スマホでは中央寄せの方が見やすい */
+    }
+}
+
+
+/* =========================================
    Googleマップ埋め込み用のスタイル
    ========================================= */
 .map-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top: 1.5rem; border-radius: 6px; border: 1px solid #e8dcc4; }
