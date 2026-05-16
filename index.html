@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバー専用ポータルサイト</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ▼▼ OneSignalのプッシュ通知用コード ▼▼ -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "59951694-6a31-4065-b3e4-81be3091561f",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <h1>メンバー専用ポータル</h1>
+        <p>〜いけよ、やれよ👍〜</p>
+    </header>
+
+    <main>
+        <div class="card-container">            
+            <!-- リンク 1 -->
+            <a href="announcements.html" class="card">
+                <div class="card-icon">📢</div>
+                <h2>お知らせ・連絡事項</h2>
+                <p>全体向けのアナウンスや、重要な共有事項はこちら。</p>
+            </a>
+
+            <!-- リンク 2 -->
+            <a href="schedule.html" class="card">
+                <div class="card-icon">📅</div>
+                <h2>活動スケジュール</h2>
+                <p>直近の例会や活動、イベントの予定を確認できます。</p>
+            </a>
+
+            <!-- リンク 3 -->
+            <a href="members.html" class="card">
+                <div class="card-icon">👥</div>
+                <h2>メンバー名簿</h2>
+                <p>所属メンバーのプロフィールや連絡先の一覧です。</p>
+            </a>
+
+            <!-- リンク 4 -->
+            <a href="activityoverview.html" class="card">
+                <div class="card-icon">🏋️</div>
+                <h2>活動概要</h2>
+                <p>長野大学RACの主な活動内容です。</p>
+            </a>
+
+            <!-- リンク 5 -->
+            <a href="archive.html" class="card">
+                <div class="card-icon">📂</div>
+                <h2>資料・活動記録</h2>
+                <p>過去のプロジェクト資料や、活動記録のアーカイブです。</p>
+            </a>
+
+            <!-- リンク 6 -->
+            <a href="organization.html" class="card">
+                <div class="card-icon">⚙️</div>
+                <h2>ロータリークラブ概要</h2>
+                <p>長野県内のロータリークラブについてまとめています。</p>
+            </a>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 メンバー専用ポータル. All rights reserved.</p>
+    </footer>
+</body>
+</html>

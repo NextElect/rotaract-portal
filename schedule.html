@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動スケジュール - メンバー専用ポータル</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>活動スケジュール</h1>
+        <p>直近のミーティングや活動の予定です</p>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <div class="back-link">
+                <a href="index.html">← トップページに戻る</a>
+            </div>
+
+            <!-- ▼▼ カレンダーの色の説明（ここから追加） ▼▼ -->
+            <div class="calendar-legend">
+                <span class="legend-title">💡 予定の色分け：</span>
+                <div class="legend-items">
+                    <!-- Googleカレンダーで設定した色に合わせて「background-color」のカラーコードを変更してください -->
+                    <div class="legend-item">
+                        <span class="color-dot" style="background-color: #039be5;"></span> RC例会
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot" style="background-color: #d21476;"></span> 国内活動
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot" style="background-color: #ad7132;"></span> 国外活動
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-dot" style="background-color: #8e24aa;"></span> その他
+                    </div>
+                </div>
+            </div>
+
+            <div class="google-calendar-wrapper">
+                <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FTokyo&showPrint=0&showTitle=0&src=bmFnYW5vdW5pLnJhY0BnbWFpbC5jb20&src=MjgzMDc1N2MwOTgwNTRmMTQ2NjYyOGNlZDkyNWMxYWFjMjUxMzFlN2FmYjVmZmZjMGU1NTZiM2ExNjhhOWM0M0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=NDQ3NDdkMjQ2Y2Y1ODMzZDhlZmE5ZDA4ZDU3ZWZiNGEyNWRiMDY0ZWY2YTc2MzAwZDFkMmZjZDQ2ZmU3YjBkNkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%23ad1457&color=%23795548&color=%230b8043" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+
+            <div class="calendar-note">
+                <p>💡 予定の追加・変更は、カレンダー管理者のGoogleアカウントから行ってください。</p>
+            </div>
+
+            <!-- ▼▼ 年間スケジュール ▼▼ -->
+            <div class="annual-schedule-container">
+                <!-- 左側：国内活動 -->
+                <div class="schedule-column">
+                    <h3 class="column-title domestic-title">🇯🇵 国内活動</h3>
+                    <ul class="annual-list">
+                        <li>
+                            <span class="month-badge">4月</span>
+                            <span class="event-text">新歓イベント・地域交流プロジェクト開始</span>
+                        </li>
+                        <li>
+                            <span class="month-badge">8月</span>
+                            <span class="event-text">RCと共同でボランティア</span>
+                        </li>
+                        <li>
+                            <span class="month-badge">10月</span>
+                            <span class="event-text">大学祭出店</span>
+                        </li>
+                        <li>
+                            <span class="month-badge">3月</span>
+                            <span class="event-text">国内合宿・次年度体制ミーティング</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 右側：海外活動 -->
+                <div class="schedule-column">
+                    <h3 class="column-title overseas-title">✈️ 海外活動</h3>
+                    <ul class="annual-list">
+                        <li>
+                            <span class="month-badge">8月</span>
+                            <span class="event-text">カンボジア研修（+1カ国かも？）</span>
+                        </li>
+                        <li>
+                            <span class="month-badge">11月</span>
+                            <span class="event-text">オンライン国際交流会（アジア圏の学生と協働）</span>
+                        </li>
+                        <li>
+                            <span class="month-badge">2月</span>
+                            <span class="event-text">カンボジア研修</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- ▲▲ 年間スケジュール ▲▲ -->
+            
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 メンバー専用ポータル. All rights reserved.</p>
+    </footer>
+</body>
+</html>

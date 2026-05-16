@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバー名簿 - メンバー専用ポータル</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>メンバー名簿</h1>
+        <p>一緒に活動する仲間たちのプロフィールです</p>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <div class="back-link">
+                <a href="index.html">← トップページに戻る</a>
+            </div>
+
+            <!-- ▼▼ メンバー名簿のグリッド（データが読み込まれる場所） ▼▼ -->
+            <div id="member-grid" class="member-grid">
+                <p style="text-align: center; color: #888; grid-column: 1 / -1;">名簿を読み込み中...</p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- ▼▼ スプレッドシートを読み込むプログラム ▼▼ -->
+    <script>
+        // 【重要】ここにステップ2でコピーしたURLを貼り付けます！
+        const GAS_URL = 'https://script.google.com/macros/s/AKfycbzjq974hWZY1-Z0lGH5EWiAjy2IWL8MoDDyCPjRoIN4T5gkbVtzQrQ2jemOoke-FL7C/exec';
+
+        // 役職に合わせた色のクラス（CSSと連動）
+        const roleClasses = {
+            '会長': 'president',
+            '幹事': 'secretary',
+            '会計': 'treasurer',
+            '会長エレクト': 'president-elect',
+            '幹事補佐': 'sub-secretary'
+            // 'メンバー' など指定がない場合はデフォルトの色になります
+        };
+
+        async function fetchMembers() {
+            try {
+                const response = await fetch(GAS_URL);
+                const data = await response.json();
+                
+                const container = document.getElementById('member-grid');
+                container.innerHTML = ''; // 「読み込み中」の文字を消す
+
+                data.forEach(item => {
+                    // 役職の色分け設定
+                    const roleClass = roleClasses[item['役職']] || '';
+                    const roleHTML = item['役職'] ? `<span class="member-role ${roleClass}">${item['役職']}</span>` : '';
+
+                    // タグが空欄の場合は表示しない設定
+                    const tag1HTML = item['タグ1'] ? `<span class="tag">${item['タグ1']}</span>` : '';
+                    const tag2HTML = item['タグ2'] ? `<span class="tag">${item['タグ2']}</span>` : '';
+
+                    // アイコンが空欄の場合はデフォルトで👤を表示
+                    const icon = item['アイコン'] || '👤';
+
+                    const memberHTML = `
+                        <div class="member-card">
+                            <div class="member-icon">${icon}</div>
+                            <div class="member-info">
+                                <h3 class="member-name">${item['名前']} ${roleHTML}</h3>
+                                <p class="member-dept">${item['学部・学年']}</p>
+                                <div class="member-tags">
+                                    ${tag1HTML}
+                                    ${tag2HTML}
+                                </div>
+                                <p class="member-comment">${item['ひとこと'].replace(/\n/g, '<br>')}</p>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', memberHTML);
+                });
+            } catch (error) {
+                document.getElementById('member-grid').innerHTML = '<p style="color: red; grid-column: 1 / -1; text-align: center;">名簿の読み込みに失敗しました。</p>';
+            }
+        }
+
+        // ページが開かれたら自動で読み込みをスタート
+        fetchMembers();
+    </script>
+</body>
+</html>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 メンバー専用ポータル. All rights reserved.</p>
+    </footer>
+</body>
+</html>
