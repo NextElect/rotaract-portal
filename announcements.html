@@ -6,6 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お知らせ・連絡事項 - メンバー専用ポータル</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* アコーディオン開閉のための追加スタイル */
+        .notice-item {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+        .notice-item:hover {
+            background-color: #fdfaf7;
+        }
+
+        /* サブタイトルのスタイル */
+        .notice-item-subtitle {
+            font-size: 0.95rem;
+            color: #666;
+            margin: 0.4rem 0 0 0;
+            font-weight: normal;
+            line-height: 1.4;
+        }
+
+        /* 詳細文を最初は隠しておく設定 */
+        .notice-detailed-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, margin-top 0.3s ease, padding 0.3s ease;
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.6;
+            padding: 0 1rem;
+            box-sizing: border-box;
+        }
+
+        /* 開いたときのスタイル */
+        .notice-item.is-open .notice-detailed-content {
+            max-height: 2000px;
+            margin-top: 1.2rem;
+            padding: 1.2rem 1rem 0 1rem;
+            border-top: 2px dashed #e8dcc4;
+        }
+
+        /* 矢印（▼▲）エリアのスタイル */
+        .notice-toggle-icon {
+            font-size: 0.85rem;
+            color: #8b5a2b;
+            margin-left: auto;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .notice-item.is-open .notice-toggle-icon {
+            color: var(--accent-color);
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +86,6 @@
     <script>
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbxqPhfeTCXsr4PeqbBVQ0OT_2q63hTkm8KmRtqsVvWKRz7ks5SVUGtCjIsBrabGRIya/exec';
 
-
         const categoryClasses = {
             '国内向け': 'practice',
             'その他': 'meeting',
@@ -49,26 +101,48 @@
                 const container = document.getElementById('notice-list');
                 container.innerHTML = '';
 
-                data.forEach(item => {
-                    const dateObj = new Date(item['日付']);
-                    const dateStr = `${dateObj.getFullYear()}.${String(dateObj.getMonth() + 1).padStart(2, '0')}.${String(dateObj.getDate()).padStart(2, '0')}`;
+                // 最新順にひっくり返して表示
+                data.reverse().forEach(item => {
+                    // 安全な日付変換処理
+                    let dateStr = '---';
+                    if (item['日付']) {
+                        let cleanDate = String(item['日付'])
+                                        .replace(/\//g, '.')
+                                        .replace('年', '.')
+                                        .replace('月', '.')
+                                        .replace('日', '');
+                        
+                        if (cleanDate.includes(' ')) {
+                            cleanDate = cleanDate.split(' ')[0];
+                        }
+                        dateStr = cleanDate;
+                    }
                     
-                    // カテゴリーごとの色分けクラスを取得
-                    // 一致しない場合は 'default-category' になるように保険をかけます
                     const categoryClass = categoryClasses[item['カテゴリー']] || 'default-category';
 
-                    const descHTML = item['説明文'] ? `<p class="notice-item-desc">${item['説明文'].replace(/\n/g, '<br>')}</p>` : '';
+                    // 【修正】D列のデータを「サブタイトル」として読み込みます
+                    const subtitleHTML = item['サブタイトル'] ? `<p class="notice-item-subtitle">${item['サブタイトル']}</p>` : '';
+                    
+                    // クリックして開く詳細文（E列）
+                    const hasDetail = item['詳細'] ? true : false;
+                    const toggleIconHTML = hasDetail ? `<span class="notice-toggle-icon">詳細を見る▼</span>` : '';
+                    const detailHTML = hasDetail ? `
+                        <div class="notice-detailed-content">
+                            ${item['詳細'].replace(/\n/g, '<br>')}
+                        </div>
+                    ` : '';
 
-                    // notice-item 自体にも categoryClass を付与して、左側の線の色を確実に変えます
                     const newsHTML = `
-                        <div class="notice-item ${categoryClass}">
+                        <div class="notice-item ${categoryClass}" ${hasDetail ? 'onclick="toggleNotice(this)"' : ''}>
                             <div class="notice-meta">
                                 <span class="news-date">${dateStr}</span>
                                 <span class="badge ${categoryClass}">${item['カテゴリー']}</span>
+                                ${toggleIconHTML}
                             </div>
                             <div class="notice-body">
                                 <h3 class="notice-item-title">${item['タイトル']}</h3>
-                                ${descHTML}
+                                ${subtitleHTML}
+                                ${detailHTML}
                             </div>
                         </div>
                     `;
@@ -78,6 +152,18 @@
             } catch (error) {
                 console.error(error);
                 document.getElementById('notice-list').innerHTML = '<p style="color: red;">お知らせの読み込みに失敗しました。</p>';
+            }
+        }
+
+        // アコーディオンを開閉させ、文字も切り替える関数
+        function toggleNotice(element) {
+            element.classList.toggle('is-open');
+            const toggleText = element.querySelector('.notice-toggle-icon');
+            
+            if (element.classList.contains('is-open')) {
+                toggleText.textContent = '詳細を閉じる▲';
+            } else {
+                toggleText.textContent = '詳細を見る▼';
             }
         }
 
